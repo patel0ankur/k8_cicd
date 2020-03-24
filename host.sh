@@ -1,1 +1,2 @@
 echo $HOSTNAME
+echo $ENV
