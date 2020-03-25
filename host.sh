@@ -1,2 +1,0 @@
-echo $HOSTNAME
-echo $ENV
