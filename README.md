@@ -65,3 +65,32 @@ Add the Kubeconfig from the Kubernetes master as a credential in Jenkins:
     • Content: Paste the contents of ~/.kube/config
 
 6. Click OK.
+
+
+Configure Environment Variables:
+
+1. On the main page of Jenkins, click Manage Jenkins. Click Configure System.
+
+2. In the Global Properties section, click the checkbox next to Environment variables. Click Add.
+
+  • Name: KUBE_MASTER_IP
+
+  • Value: <ip>
+
+3. Click Apply.
+
+4. In the GitHub section, click Add GitHub Server and then click GitHub Server.
+
+	• Name: GitHub
+
+ 	• Credentials: Click Add and then click Jenkins
+
+		○ Kind: Secret text
+
+		○ Secret: Paste the GitHub API token from the earlier step
+
+		○ ID: github_secret
+
+		○ Description: GitHub Secret
+
+5. Click Add. Click the dropdown next to Credentials and select the GitHub Secret we just added. Click Save.
