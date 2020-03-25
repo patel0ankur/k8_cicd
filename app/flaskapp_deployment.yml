@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flaskapp
+  name: flaskapp
+
+spec:
+
+# Number of Replica
+  replicas: 1
+
+# This must match the labels we set on the pod!
+  selector:
+    matchLabels:
+      app: flaskapp
+      tier: app
+
+# How do want to update the pods?
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+
+# This template field is a regular pod configuration
+  template:
+    metadata:
+      labels:
+        app: flaskapp
+        tier: app
+
+# Pod configuration
+    spec:
+      containers:
+        - name: flaskapp
+          image: ankurpatel/kubeapp:latest
+          imagePullPolicy: Always
+          env:
+            - name: DB_User
+              value: root
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: ROOT_PASSWORD
+            - name: DB_Host
+              value: mysql
+          ports:
+            - name: flaskapp
+              containerPort: 5000
+          resources:
+            requests:
+              memory: 1Gi
+
+      restartPolicy: Always

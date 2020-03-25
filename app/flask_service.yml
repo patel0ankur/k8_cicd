@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaskapp
+  labels:
+    service: flaskapp
+
+spec:
+  type: NodePort                            # Opens specific port on VMs
+  selector:
+    app: flaskapp                           # Select pods with the label 'app' set to 'flaskapp'
+  ports:
+    - port: 5000                            # port exposed internally in the cluster
+      targetPort: 5000                      # the container port to send requests to
+      nodePort: 30036                       # a static port assigned on each the node/VMs
