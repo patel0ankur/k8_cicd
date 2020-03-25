@@ -4,7 +4,7 @@ pipeline {
         DOCKER_IMAGE_NAME = "ankurpatel/nflapp"
         CANARY_REPLICAS = 0
         registryCredential = 'Docker_Hub_Login'
-        #dockerImage = ''
+        
     }
 
     stages {
