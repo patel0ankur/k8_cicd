@@ -38,3 +38,30 @@ Add DockerHub Credentials in Jenkins:
     • Description: Docker Hub Login
 
 2. Click OK.
+
+
+Add the Kubeconfig from the Kubernetes master as a credential in Jenkins:
+
+1. Log in to the Kubernetes master node.
+
+2. Display the contents of our Kubeconfig:
+
+    • cat ~/.kube/config
+
+3. Copy the output of this file to your clipboard. We will need to paste this into Jenkins.
+
+4. Click Add Credentials in the menu on the left of the page.
+
+5. Add credentials with the following information:
+
+    • Kind: Kubernetes configuration (kubeconfig)
+
+    • ID: kubeconfig
+
+    • Description: Kubeconfig
+
+    • Kubeconfig: Enter directly
+
+    • Content: Paste the contents of ~/.kube/config
+
+6. Click OK.
