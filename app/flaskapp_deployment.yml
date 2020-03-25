@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,14 +16,6 @@ spec:
     matchLabels:
       app: flaskapp
       tier: app
-
-# How do want to update the pods?
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-
 # This template field is a regular pod configuration
   template:
     metadata:
@@ -34,7 +27,7 @@ spec:
     spec:
       containers:
         - name: flaskapp
-          image: ankurpatel/kubeapp:latest
+          image: ankurpatel/nflapp:latest
           imagePullPolicy: Always
           env:
             - name: DB_User
@@ -49,8 +42,22 @@ spec:
           ports:
             - name: flaskapp
               containerPort: 5000
-          resources:
-            requests:
-              memory: 1Gi
-
       restartPolicy: Always
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaskapp
+  labels:
+    service: flaskapp
+
+spec:
+  type: NodePort                            # Opens specific port on VMs
+  selector:
+    app: flaskapp                           # Select pods with the label 'app' set to 'flaskapp'
+  ports:
+    - port: 5000                            # port exposed internally in the cluster
+      targetPort: 5000                      # the container port to send requests to
+      nodePort: 30036                       # a static port assigned on each the node/VMs
+
