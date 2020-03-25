@@ -1,5 +1,4 @@
-@@ -1,96 +1,27 @@
-# k8_cicd
+# k8s_cicd
 Prepare the Jenkins Environment and Verify Your Configuration with an Initial Deploy:
 
 1) Add GitHub Credentials in Jenkins:
