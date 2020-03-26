@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE_NAME = "ankurpatel/nflapp"
+        DOCKER_IMAGE_NAME = "ankurpatel/flaskapp"
         registryCredential = 'Docker_Hub_Login'
         
     }
