@@ -1,6 +1,5 @@
-# k8s_cicd
+# k8s_cicd
 
-#### Deploying Flask app into Kubernetes Cluster. 
+### **Deploying Flask app into Kubernetes Cluster.** 
 
-####Architecture: 
-
+#### Architecture: 
