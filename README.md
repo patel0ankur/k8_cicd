@@ -2,5 +2,5 @@
 
 #### Deploying Flask app into Kubernetes Cluster. 
 
-#####Architecture: 
+####Architecture: 
 
