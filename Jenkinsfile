@@ -37,18 +37,18 @@ pipeline {
             }
         }
 
-        stage('Push DB Docker Image') {
-            when {
-                branch 'master'
-            }
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
-                        db.push("$BUILD_NUMBER")
-                    }
-                }
-            }
-        }
+    //    stage('Push DB Docker Image') {
+       //     when {
+       //         branch 'master'
+        //    }
+         //   steps {
+          //      script {
+          //          docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
+          //              db.push("$BUILD_NUMBER")
+            //        }
+          //      }
+        //    }
+      //  }
 
         stage('Push APP Docker Image') {
             when {
