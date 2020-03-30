@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: ankurpatel/db:$BUILD_NUMBER
+          image: ankurpatel/flaskdb:$BUILD_NUMBER
           imagePullPolicy: Always
           env:
             - name: MYSQL_ROOT_PASSWORD

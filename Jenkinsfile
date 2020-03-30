@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_APP_IMAGE = "ankurpatel/flaskapp" + ":$BUILD_NUMBER"
-        DOCKER_DB_IMAGE = "ankurpatel/db" + ":$BUILD_NUMBER"
+        DOCKER_DB_IMAGE = "ankurpatel/flaskdb" + ":$BUILD_NUMBER"
         registryCredential = 'Docker_Hub_Login'
         
     }
