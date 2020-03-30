@@ -37,18 +37,18 @@ pipeline {
             }
         }
 
-    //    stage('Push DB Docker Image') {
-       //     when {
-       //         branch 'master'
-        //    }
-         //   steps {
-          //      script {
-          //          docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
-          //              db.push("$BUILD_NUMBER")
-            //        }
-          //      }
-        //    }
-      //  }
+        stage('Push DB Docker Image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
+                    db.push("$BUILD_NUMBER")
+                    }
+               }
+            }
+        }
 
         stage('Push APP Docker Image') {
             when {
@@ -82,7 +82,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                milestone(1)
+                milestone(2)
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'app/flaskapp_deployment.yml',
