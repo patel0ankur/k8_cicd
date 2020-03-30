@@ -1,7 +1,8 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE_NAME = "ankurpatel/flaskapp"
+        DOCKER_APP_IMAGE = "ankurpatel/flaskapp" + ":$BUILD_NUMBER"
+        DOCKER_DB_IMAGE = "ankurpatel/db" + ":$BUILD_NUMBER"
         registryCredential = 'Docker_Hub_Login'
         
     }
@@ -14,30 +15,69 @@ pipeline {
                 }
             }
 
-        stage('Build Docker Image') {
+        stage('Build DB Docker Image'){
             when {
                 branch 'master'
             }
             steps {
                 script {
-                    app = docker.build(DOCKER_IMAGE_NAME)
+                db = docker.build(DOCKER_DB_IMAGE, "-f db/Dockerfile db/")
+                }
+            }
+        }
+
+        stage('Build APP Docker Image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    app = docker.build(DOCKER_APP_IMAGE, "-f app/Dockerfile app/")
                    }
             }
         }
-        stage('Push Docker Image') {
+
+        stage('Push DB Docker Image') {
             when {
                 branch 'master'
             }
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
-                        app.push("latest")
+                        db.push("$BUILD_NUMBER")
                     }
                 }
             }
         }
 
-        stage('DeployToProduction') {
+        stage('Push APP Docker Image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
+                        app.push("$BUILD_NUMBER")
+                    }
+                }
+            }
+        }
+
+         stage('Deploy DB To K8s') {
+            when {
+                branch 'master'
+            }
+            steps {
+                milestone(1)
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'db/mysql_deployment.yml',
+                    enableConfigSubstitution: true
+                )
+            }
+        }
+
+        stage('Deploy APP To K8s') {
             when {
                 branch 'master'
             }

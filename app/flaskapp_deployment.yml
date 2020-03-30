@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: flaskapp
-          image: ankurpatel/flaskapp:latest
+          image: ankurpatel/flaskapp:$BUILD_NUMBER
           imagePullPolicy: Always
           env:
             - name: DB_User
